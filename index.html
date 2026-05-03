@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600;700&family=Noto+Sans:wght@300;400;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --red-primary: #8B1A1A;
+            --red-dark: #5C0E0E;
+            --red-light: #C0392B;
+            --red-accent: #E74C3C;
+            --black: #1a1a1a;
+            --dark-gray: #2c2c2c;
+            --cream: #FFF8F0;
+            --text-dark: #1a1a1a;
+            --text-light: #555;
+            --text-muted: #888;
+            --border: #e8e0d8;
+            --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Noto Sans', 'Noto Sans JP', sans-serif;
+            background-color: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+            text-align: center;
+            padding: 30px 20px 20px;
+        }
+        .header::after {
+            content: '';
+            display: block;
+            height: 4px;
+            background: linear-gradient(90deg, var(--red-dark), var(--red-accent), var(--red-dark));
+        }
+        .logo-img {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.2);
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            color: #fff; font-size: 14px; font-weight: 300;
+            letter-spacing: 3px; text-transform: uppercase; opacity: 0.7;
+        }
+
+        .nav {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            white-space: nowrap; padding: 0 10px;
+            scrollbar-width: none;
+        }
+        .nav::-webkit-scrollbar { display: none; }
+        .nav a {
+            display: inline-block; padding: 14px 14px;
+            text-decoration: none; color: var(--text-light);
+            font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
+            border-bottom: 3px solid transparent; transition: all 0.2s;
+        }
+        .nav a:hover, .nav a.active {
+            color: var(--red-primary);
+            border-bottom-color: var(--red-primary);
+        }
+
+        .section { padding: 20px 16px 10px; }
+        .section-title {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 20px; padding-bottom: 12px;
+            border-bottom: 2px solid var(--red-primary);
+        }
+        .section-title h2 { font-size: 20px; font-weight: 700; color: var(--red-primary); }
+        .section-title .subtitle { font-size: 12px; color: var(--text-muted); font-weight: 400; }
+
+        .menu-grid {
+            display: grid; grid-template-columns: 1fr; gap: 16px;
+        }
+        @media (min-width: 640px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .menu-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .menu-card {
+            background: #fff; border-radius: 12px; overflow: hidden;
+            box-shadow: var(--card-shadow); transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .menu-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        .card-image {
+            width: 100%; height: 200px; object-fit: cover;
+            display: block; background-color: #f0ebe5;
+        }
+        .card-body { padding: 14px 16px 16px; }
+        .card-name {
+            font-size: 17px; font-weight: 700; color: var(--text-dark);
+            margin-bottom: 4px; line-height: 1.3;
+        }
+        .card-names-sub {
+            font-size: 11px; color: var(--text-muted);
+            line-height: 1.5; margin-bottom: 10px;
+        }
+        .card-names-sub span { display: inline; }
+        .card-names-sub span + span::before { content: ' | '; color: #ccc; }
+
+        .card-bottom { display: flex; justify-content: space-between; align-items: center; }
+        .card-price { font-size: 18px; font-weight: 700; color: var(--red-primary); }
+        .card-price .currency { font-size: 13px; font-weight: 400; }
+        .card-cal {
+            font-size: 11px; color: var(--text-muted);
+            background: #f5f0eb; padding: 3px 8px; border-radius: 20px;
+        }
+
+        .extras-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+        }
+        @media (min-width: 640px) { .extras-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .extra-card {
+            background: #fff; border-radius: 10px; overflow: hidden;
+            box-shadow: var(--card-shadow); text-align: center;
+        }
+        .extra-card .card-image { height: 120px; }
+        .extra-card .card-body { padding: 10px 12px 12px; }
+        .extra-card .card-name { font-size: 14px; margin-bottom: 2px; }
+        .extra-card .card-names-sub { margin-bottom: 6px; }
+        .extra-card .card-price { font-size: 16px; }
+
+        .footer {
+            text-align: center; padding: 30px 20px;
+            color: var(--text-muted); font-size: 12px;
+            border-top: 1px solid var(--border); margin-top: 20px;
+        }
+
+        .badge {
+            display: inline-block; color: #fff; font-size: 10px;
+            padding: 1px 6px; border-radius: 4px; font-weight: 600;
+            margin-left: 4px; vertical-align: middle;
+            background: var(--red-primary);
+        }
+
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="images/logo.JPG" alt="Logo" class="logo-img">
+    <h1>M E N U</h1>
+</div>
+
+<nav class="nav" id="nav">
+    <a href="#soup">Шөлтэй / Рамен</a>
+    <a href="#beef">Үхрийн мах</a>
+    <a href="#chicken">Тахиа, гахай, хонь</a>
+    <a href="#noodles">Гоймон</a>
+    <a href="#family">Гэр бүлийн</a>
+    <a href="#kids">Хүүхдийн</a>
+    <a href="#bento">Бэнто</a>
+    <a href="#extras">Нэмэлт</a>
+</nav>
+
+<main>
+
+    <!-- ===== 1. ШӨЛТЭЙ / РАМЕН (sorted: 1,2,3,4,26,27,28,29,51) ===== -->
+    <div class="section" id="soup">
+        <div class="section-title">
+            <h2>Шөлтэй / Рамен</h2>
+            <span class="subtitle">Soup & Ramen</span>
+        </div>
+        <div class="menu-grid">
+
+            <div class="menu-card">
+                <img class="card-image" src="images/1. Miso Ramen.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">1. Miso Ramen</div>
+                    <div class="card-names-sub"><span>Мисо рамен</span><span>味噌ラーメン</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="1"></div>
+                        <div class="card-cal">1,317 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/2. Beef Ramen.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">2. Beef Ramen</div>
+                    <div class="card-names-sub"><span>Томияа спешл рамен</span><span>とみやスペシャルラーメン</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="2"></div>
+                        <div class="card-cal">1,008 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/3. Spicy Chicken Ramen.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">3. Spicy Chicken Ramen</div>
+                    <div class="card-names-sub"><span>Тахианы мах, халуун ногоотой рамен</span><span>スパイシーチキンラーメン</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="3"></div>
+                        <div class="card-cal">1,026 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/4. Tonkotsu Ramen.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">4. Tonkotsu Ramen</div>
+                    <div class="card-names-sub"><span>Гахайн ясны рамен</span><span>豚骨ラーメン</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="4"></div>
+                        <div class="card-cal">1,262 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/26. Tonkotsu Ramen :half:.jpg.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">26. Tonkotsu Ramen <span class="badge">HALF</span></div>
+                    <div class="card-names-sub"><span>Гахайн ясны рамен /хагас/</span><span>豚骨ラーメン（ハーフ）</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="26"></div>
+                        <div class="card-cal">964 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/27. Spicy Chicken Ramen :half:.jpg.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">27. Spicy Chicken Ramen <span class="badge">HALF</span></div>
+                    <div class="card-names-sub"><span>Тахианы мах, халуун ногоотой рамен /хагас/</span><span>スパイシーチキンラーメン（ハーフ）</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="27"></div>
+                        <div class="card-cal">817 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/28. Miso Ramen :half:.jpg.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">28. Miso Ramen <span class="badge">HALF</span></div>
+                    <div class="card-names-sub"><span>Мисо рамен /хагас/</span><span>味噌ラーメン（ハーフ）</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="28"></div>
+                        <div class="card-cal">985 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/29. Beef Ramen :half:.jpg.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">29. Tomiya Special Ramen <span class="badge">HALF</span></div>
+                    <div class="card-names-sub"><span>Томияа спешл рамен /хагас/</span><span>とみやスペシャルラーメン（ハーフ）</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="29"></div>
+                        <div class="card-cal">805 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/51. Хавиргатай шөл_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">51. Хавиргатай шөл</div>
+                    <div class="card-names-sub"><span>Mutton Ribs Soup Set</span><span>ラムカルビスープ定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="51"></div>
+                        <div class="card-cal">1,055 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 2. ҮХРИЙН МАХ ГОЛЛОСОН (sorted: 5,8,9,12,13,14,17,54,55,61,62,63,68) ===== -->
+    <div class="section" id="beef">
+        <div class="section-title">
+            <h2>Үхрийн мах голлосон</h2>
+            <span class="subtitle">Beef</span>
+        </div>
+        <div class="menu-grid">
+
+            <div class="menu-card">
+                <img class="card-image" src="images/5. Yakisoba & Yakiniku_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">5. Yakisoba & Yakiniku</div>
+                    <div class="card-names-sub"><span>Үхрийн махтай шарсан гоймон & Үхрийн амталсан махтай будаа</span><span>焼きそば・焼肉定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="5"></div>
+                        <div class="card-cal">3,537 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/8. Beef Curry Don.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">8. Beef Curry Don</div>
+                    <div class="card-names-sub"><span>Үхрийн махтай карри</span><span>ビーフカレー定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="8"></div>
+                        <div class="card-cal">1,287 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/9. Tomiya Special_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">9. Tomiya Special</div>
+                    <div class="card-names-sub"><span>Toмияа спешл</span><span>とみやスペシャル定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="9"></div>
+                        <div class="card-cal">2,120 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/12. Yakiniku & Chicken Cream Stew_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">12. Yakiniku & Chicken Cream Stew</div>
+                    <div class="card-names-sub"><span>Үхрийн амталсан мах & Соустай тахианы шөл</span><span>焼肉・チキンクリームシチュー定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="12"></div>
+                        <div class="card-cal">1,889 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/13. Yakiniku & Shogayaki_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">13. Yakiniku & Shogayaki</div>
+                    <div class="card-names-sub"><span>Үхрийн амталсан мах & Гахайн махтай будаа</span><span>焼肉・生姜焼き定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="13"></div>
+                        <div class="card-cal">2,406 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/14. Yakiniku_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">14. Yakiniku</div>
+                    <div class="card-names-sub"><span>Үхрийн амталсан махтай будаа</span><span>焼肉定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="14"></div>
+                        <div class="card-cal">1,620 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/17. Yakiniku & Ramen :half:_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">17. Yakiniku & Ramen <span class="badge">HALF</span></div>
+                    <div class="card-names-sub"><span>Үхрийн амталсан мах & Рамен /хагас/</span><span>焼肉・ラーメン（ハーフ）</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="17"></div>
+                        <div class="card-cal">1,918 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/54. Маханд дурлагсад сет 1_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">54. Маханд дурлагсад сет 1</div>
+                    <div class="card-names-sub"><span>Meat Lover Set 1</span><span>お肉好き定食１</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="54"></div>
+                        <div class="card-cal">2,043 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/55. Маханд дурлагсад сет 2_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">55. Маханд дурлагсад сет 2</div>
+                    <div class="card-names-sub"><span>Meat Lover Set 2</span><span>お肉好き定食２</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="55"></div>
+                        <div class="card-cal">1,597 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/61. Гуляш сет_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">61. Гуляш сет</div>
+                    <div class="card-names-sub"><span>Goulash Set</span><span>ビーフシチュー定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="61"></div>
+                        <div class="card-cal">1,490 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/62. Нарийн махтай сет_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">62. Нарийн махтай сет</div>
+                    <div class="card-names-sub"><span>Sliced & Stewed Beef Set</span><span>ビーフ煮込み定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="62"></div>
+                        <div class="card-cal">1,359 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/63. Бөөрөнхий махтай сет_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">63. Бөөрөнхий махтай сет</div>
+                    <div class="card-names-sub"><span>Meat Ball Set</span><span>ミートボール定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="63"></div>
+                        <div class="card-cal">1,806 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/68. Төмсний нухаш сет_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">68. Төмсний нухаш сет</div>
+                    <div class="card-names-sub"><span>Mashed Potato Set</span><span>マッシュポテト定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="68"></div>
+                        <div class="card-cal">1,452 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 3. ТАХИА, ГАХАЙ, ХОНИНЫ МАХ (sorted: 6,7,10,11,15,16,52,53,59) ===== -->
+    <div class="section" id="chicken">
+        <div class="section-title">
+            <h2>Тахиа, гахай, хонины мах</h2>
+            <span class="subtitle">Chicken, Pork & Mutton</span>
+        </div>
+        <div class="menu-grid">
+
+            <div class="menu-card">
+                <img class="card-image" src="images/6. Teriyaki Chicken & Chicken Curry_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">6. Teriyaki Chicken & Chicken Curry</div>
+                    <div class="card-names-sub"><span>Террияки соустай тахианы мах & Тахианы махтай карри</span><span>照り焼きチキン・チキンカレー定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="6"></div>
+                        <div class="card-cal">2,104 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/7. Chicken Curry Don.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">7. Chicken Curry Don</div>
+                    <div class="card-names-sub"><span>Тахианы махтай карри</span><span>チキンカレー定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="7"></div>
+                        <div class="card-cal">1,238 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/10. San-shoku Don_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">10. San-shoku Don</div>
+                    <div class="card-names-sub"><span>Саншокү буюу 3 өнгийн хуурга</span><span>三色丼定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="10"></div>
+                        <div class="card-cal">1,938 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/11. Teriyaki Chicken_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">11. Teriyaki Chicken</div>
+                    <div class="card-names-sub"><span>Террияки соустай тахианы мах</span><span>照り焼きチキン定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="11"></div>
+                        <div class="card-cal">1,149 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/15. Shogayaki_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">15. Shogayaki</div>
+                    <div class="card-names-sub"><span>Гахайн амталсан махтай будаа</span><span>生姜焼き定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="15"></div>
+                        <div class="card-cal">2,212 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/16. Teriyaki Chicken & Ramen :half:_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">16. Teriyaki Chicken & Ramen <span class="badge">HALF</span></div>
+                    <div class="card-names-sub"><span>Террияки соустай тахианы мах & Рамен /хагас/</span><span>照り焼きチキン・ラーメン（ハーフ）</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="16"></div>
+                        <div class="card-cal">2,157 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/52. Шарсан хавиргатай сет_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">52. Шарсан хавиргатай сет</div>
+                    <div class="card-names-sub"><span>Fried Ribs Set</span><span>ラムカルビ定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="52"></div>
+                        <div class="card-cal">1,787 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/53. Ананастай шарсан тахиа cет_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">53. Ананастай шарсан тахиа cет</div>
+                    <div class="card-names-sub"><span>Chicken with Ananas Set</span><span>チキン・パイナップル定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="53"></div>
+                        <div class="card-cal">1,106 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/59. Чихэрлэг халуун ногоотой тахианы махтай сет_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">59. Чихэрлэг халуун ногоотой тахианы махтай сет</div>
+                    <div class="card-names-sub"><span>Spicy & Sweet Chicken Set</span><span>スパイシー・スイートチキン定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="59"></div>
+                        <div class="card-cal">2,038 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 4. ГОЙМОН (sorted: 18,19,24,25) ===== -->
+    <div class="section" id="noodles">
+        <div class="section-title">
+            <h2>Гоймон</h2>
+            <span class="subtitle">Noodles</span>
+        </div>
+        <div class="menu-grid">
+
+            <div class="menu-card">
+                <img class="card-image" src="images/18. Yakisoba_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">18. Yakisoba</div>
+                    <div class="card-names-sub"><span>Үхрийн махтай шарсан гоймон</span><span>焼きそば定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="18"></div>
+                        <div class="card-cal">1,063 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/19. Yakiudon_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">19. Yakiudon</div>
+                    <div class="card-names-sub"><span>Үхрийн махтай шарсан бүдүүн гоймон</span><span>焼きうどん定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="19"></div>
+                        <div class="card-cal">950 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/24. Vegan Yakisoba_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">24. Vegan Yakisoba</div>
+                    <div class="card-names-sub"><span>Цагаан хоолтны шарсан гоймон</span><span>ヴィーガン焼きそば定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="24"></div>
+                        <div class="card-cal">709 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/25. Vegan Yakiudon_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">25. Vegan Yakiudon</div>
+                    <div class="card-names-sub"><span>Цагаан хоолтны шарсан бүдүүн гоймон</span><span>ヴィーガン焼きうどん定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="25"></div>
+                        <div class="card-cal">597 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 5. ГЭР БҮЛИЙН / SHARE FOOD (sorted: 20,60) ===== -->
+    <div class="section" id="family">
+        <div class="section-title">
+            <h2>Гэр бүлийн буюу Share Food</h2>
+            <span class="subtitle">Family & Sharing Sets</span>
+        </div>
+        <div class="menu-grid">
+
+            <div class="menu-card">
+                <img class="card-image" src="images/20. Family Set_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">20. Family Set</div>
+                    <div class="card-names-sub"><span>Гэр бүлийн багц</span><span>ファミリー定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="20"></div>
+                        <div class="card-cal">5,341 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/60. Гурван хүний сет_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">60. Гурван хүний сет</div>
+                    <div class="card-names-sub"><span>Three People Set</span><span>３人前定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="60"></div>
+                        <div class="card-cal">4,665 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 6. ХҮҮХДИЙН БАГЦ (sorted: 23,65,66) ===== -->
+    <div class="section" id="kids">
+        <div class="section-title">
+            <h2>Хүүхдийн багц</h2>
+            <span class="subtitle">Kids Sets</span>
+        </div>
+        <div class="menu-grid">
+
+            <div class="menu-card">
+                <img class="card-image" src="images/23. Kids Set.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">23. Kids Set</div>
+                    <div class="card-names-sub"><span>Хүүхдийн багц</span><span>お子様定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="23"></div>
+                        <div class="card-cal">962 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/65. Хүүхдийн сет 2_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">65. Хүүхдийн сет 2</div>
+                    <div class="card-names-sub"><span>Kids Set 2</span><span>お子様定食２</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="65"></div>
+                        <div class="card-cal">1,253 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/66. Хүүхдийн сет 3_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">66. Хүүхдийн сет 3</div>
+                    <div class="card-names-sub"><span>Kids Set 3</span><span>お子様定食３</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="66"></div>
+                        <div class="card-cal">1,105 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 7. БЭНТО (sorted: bento-18,19,24,25,52,53,63,72,73) ===== -->
+    <div class="section" id="bento">
+        <div class="section-title">
+            <h2>Бэнто</h2>
+            <span class="subtitle">Lunchbox / Bento</span>
+        </div>
+        <div class="menu-grid">
+
+            <div class="menu-card">
+                <img class="card-image" src="images/Bento - 18. Yakisoba.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 18. Yakisoba</div>
+                    <div class="card-names-sub"><span>Үхрийн махтай шарсан гоймон</span><span>焼きそば定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="bento-18"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/Bento - 19. Yakiudon.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 19. Yakiudon</div>
+                    <div class="card-names-sub"><span>Үхрийн махтай шарсан бүдүүн гоймон</span><span>焼きうどん定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="bento-19"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/Bento - 24. Vegan Yakisoba.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 24. Vegan Yakisoba</div>
+                    <div class="card-names-sub"><span>Цагаан хоолтны шарсан гоймон</span><span>ヴィーガン焼きそば定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="bento-24"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/Bento - 25. Vegan Yakiudon.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 25. Vegan Yakiudon</div>
+                    <div class="card-names-sub"><span>Цагаан хоолтны шарсан бүдүүн гоймон</span><span>ヴィーガン焼きうどん定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="bento-25"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/Bento - 52. Шарсан хавиргатай сет.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 52. Шарсан хавиргатай сет</div>
+                    <div class="card-names-sub"><span>Fried Ribs Set</span><span>ラムカルビ定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="bento-52"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/Bento - 53. Ананастай шарсан тахиа cет.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 53. Ананастай шарсан тахиа cет</div>
+                    <div class="card-names-sub"><span>Chicken with Ananas Set</span><span>チキン・パイナップル定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="bento-53"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/Bento - 63. Бөөрөнхий махтай сет.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 63. Бөөрөнхий махтай сет</div>
+                    <div class="card-names-sub"><span>Meat Ball Set</span><span>ミートボール定食</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="bento-63"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/72. Террияки шарсан тахиа.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 72. Террияки шарсан тахиа</div>
+                    <div class="card-names-sub"><span>Teriyaki Fried Chicken</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="72"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <img class="card-image" src="images/73. Солонгос шарсан тахиа.JPG" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">Bento - 73. Солонгос шарсан тахиа</div>
+                    <div class="card-names-sub"><span>Korean Fried Chicken</span></div>
+                    <div class="card-bottom">
+                        <div class="card-price" data-id="73"></div>
+                        <div class="card-cal"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 8. НЭМЭЛТ (sorted: 21,22,70,71) ===== -->
+    <div class="section" id="extras">
+        <div class="section-title">
+            <h2>Нэмэлт</h2>
+            <span class="subtitle">Extras</span>
+        </div>
+        <div class="extras-grid">
+
+            <div class="extra-card">
+                <img class="card-image" src="images/21. Будаа_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">21. Будаа</div>
+                    <div class="card-names-sub"><span>Rice</span><span>ご飯</span></div>
+                    <div class="card-bottom" style="justify-content:center;gap:10px;">
+                        <div class="card-price" data-id="21"></div>
+                        <div class="card-cal">585 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="extra-card">
+                <img class="card-image" src="images/22. Miso Soup_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">22. Miso Soup</div>
+                    <div class="card-names-sub"><span>Мисо шөл</span><span>味噌汁</span></div>
+                    <div class="card-bottom" style="justify-content:center;gap:10px;">
+                        <div class="card-price" data-id="22"></div>
+                        <div class="card-cal">40 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="extra-card">
+                <img class="card-image" src="images/70. Тахианы шөл_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">70. Тахианы шөл</div>
+                    <div class="card-names-sub"><span>Chicken Soup</span><span>鶏がらスープ</span></div>
+                    <div class="card-bottom" style="justify-content:center;gap:10px;">
+                        <div class="card-price" data-id="70"></div>
+                        <div class="card-cal">196 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="extra-card">
+                <img class="card-image" src="images/71. Талх_crop.jpg" alt="" loading="lazy">
+                <div class="card-body">
+                    <div class="card-name">71. Талх</div>
+                    <div class="card-names-sub"><span>Bread</span><span>パン</span></div>
+                    <div class="card-bottom" style="justify-content:center;gap:10px;">
+                        <div class="card-price" data-id="71"></div>
+                        <div class="card-cal">300 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<div class="footer">
+    <p>Prices are in Mongolian Tugrik (MNT)</p>
+</div>
+
+<script>
+/*
+ * ========================================================
+ *  ҮНИЙН ЖАГСААЛТ - PRICES LIST
+ *  Үнэ солих бол доорх тоонуудыг өөрчилнө үү.
+ *  To change prices, edit the numbers below.
+ * ========================================================
+ */
+const PRICES = {
+    // --- Шөлтэй / Рамен ---
+    "1":  "18,900",   // 1. Miso Ramen
+    "2":  "18,900",   // 2. Beef Ramen
+    "3":  "18,900",   // 3. Spicy Chicken Ramen
+    "4":  "18,900",   // 4. Tonkotsu Ramen
+    "26": "15,900",   // 26. Tonkotsu Ramen /half/
+    "27": "15,900",   // 27. Spicy Chicken Ramen /half/
+    "28": "15,900",   // 28. Miso Ramen /half/
+    "29": "15,900",   // 29. Tomiya Special Ramen /half/
+    "51": "17,900",   // 51. Хавиргатай шөл
+
+    // --- Үхрийн мах голлосон ---
+    "5":  "43,900",   // 5. Yakisoba & Yakiniku
+    "8":  "21,900",   // 8. Beef Curry Don
+    "9":  "28,900",   // 9. Tomiya Special
+    "12": "30,900",   // 12. Yakiniku & Chicken Cream Stew
+    "13": "30,900",   // 13. Yakiniku & Shogayaki
+    "14": "24,900",   // 14. Yakiniku
+    "17": "29,900",   // 17. Yakiniku & Ramen /half/
+    "54": "30,900",   // 54. Маханд дурлагсад сет 1
+    "55": "24,900",   // 55. Маханд дурлагсад сет 2
+    "61": "20,900",   // 61. Гуляш сет
+    "62": "20,900",   // 62. Нарийн махтай сет
+    "63": "20,900",   // 63. Бөөрөнхий махтай сет
+    "68": "19,900",   // 68. Төмсний нухаш сет
+
+    // --- Тахиа, гахай, хонины мах ---
+    "6":  "27,900",   // 6. Teriyaki Chicken & Chicken Curry
+    "7":  "17,900",   // 7. Chicken Curry Don
+    "10": "20,900",   // 10. San-shoku Don
+    "11": "18,900",   // 11. Teriyaki Chicken
+    "15": "24,900",   // 15. Shogayaki
+    "16": "29,900",   // 16. Teriyaki Chicken & Ramen /half/
+    "52": "27,900",   // 52. Шарсан хавиргатай сет
+    "53": "19,900",   // 53. Ананастай шарсан тахиа cет
+    "59": "21,900",   // 59. Чихэрлэг халуун ногоотой тахианы махтай сет
+
+    // --- Гоймон ---
+    "18": "20,900",   // 18. Yakisoba
+    "19": "20,900",   // 19. Yakiudon
+    "24": "16,900",   // 24. Vegan Yakisoba
+    "25": "16,900",   // 25. Vegan Yakiudon
+
+    // --- Гэр бүлийн буюу Share Food ---
+    "20": "60,900",   // 20. Family Set
+    "60": "61,900",   // 60. Гурван хүний сет
+
+    // --- Хүүхдийн багц ---
+    "23": "15,900",   // 23. Kids Set
+    "65": "15,900",   // 65. Хүүхдийн сет 2
+    "66": "15,900",   // 66. Хүүхдийн сет 3
+
+    // --- Бэнто ---
+    "bento-18": "13,900",   // Bento - 18. Yakisoba
+    "bento-19": "13,900",   // Bento - 19. Yakiudon
+    "bento-24": "9,900",    // Bento - 24. Vegan Yakisoba
+    "bento-25": "9,900",    // Bento - 25. Vegan Yakiudon
+    "bento-52": "18,900",   // Bento - 52. Шарсан хавиргатай сет
+    "bento-53": "13,900",   // Bento - 53. Ананастай шарсан тахиа cет
+    "bento-63": "13,900",   // Bento - 63. Бөөрөнхий махтай сет
+    "72": "18,900",         // Bento - 72. Террияки шарсан тахиа
+    "73": "18,900",         // Bento - 73. Солонгос шарсан тахиа
+
+    // --- Нэмэлт ---
+    "21": "5,500",    // 21. Будаа
+    "22": "4,500",    // 22. Miso Soup
+    "70": "2,000",    // 70. Тахианы шөл
+    "71": "600",      // 71. Талх
+};
+
+document.querySelectorAll('.card-price[data-id]').forEach(el => {
+    const id = el.getAttribute('data-id');
+    if (PRICES[id]) {
+        el.innerHTML = PRICES[id] + '<span class="currency">\u20AE</span>';
+    }
+});
+
+// Navigation highlight
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav a');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            const id = entry.target.id;
+            const activeLink = document.querySelector('.nav a[href="#' + id + '"]');
+            if (activeLink) activeLink.classList.add('active');
+        }
+    });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(section => observer.observe(section));
+</script>
+
+</body>
+</html>
