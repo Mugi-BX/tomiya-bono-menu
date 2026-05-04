@@ -150,6 +150,40 @@
             background: var(--red-primary);
         }
 
+        .card-half {
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: #f9f5f0;
+            border-radius: 8px;
+            border-left: 3px solid var(--red-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        .card-half .half-label {
+            font-weight: 600;
+        }
+        .card-half .half-info {
+            text-align: right;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .card-half .half-price {
+            font-weight: 700;
+            color: var(--red-primary);
+            font-size: 14px;
+        }
+        .card-half .half-cal {
+            font-size: 10px;
+            color: var(--text-muted);
+            background: #eee8e0;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
         html { scroll-behavior: smooth; }
     </style>
 </head>
@@ -173,7 +207,7 @@
 
 <main>
 
-    <!-- ===== 1. ШӨЛТЭЙ / РАМЕН (sorted: 1,2,3,4,26,27,28,29,51) ===== -->
+    <!-- ===== 1. ШӨЛТЭЙ / РАМЕН (sorted: 1,2,3,4,51 / half: 26,27,28,29 inline) ===== -->
     <div class="section" id="soup">
         <div class="section-title">
             <h2>Шөлтэй / Рамен</h2>
@@ -190,6 +224,13 @@
                         <div class="card-price" data-id="1"></div>
                         <div class="card-cal">1,317 kcal</div>
                     </div>
+                    <div class="card-half">
+                        <span class="half-label"><span class="badge">ХАГАС</span> 28. Miso Ramen /half/</span>
+                        <span class="half-info">
+                            <span class="half-price" data-id="28"></span>
+                            <span class="half-cal">985 kcal</span>
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -201,6 +242,13 @@
                     <div class="card-bottom">
                         <div class="card-price" data-id="2"></div>
                         <div class="card-cal">1,008 kcal</div>
+                    </div>
+                    <div class="card-half">
+                        <span class="half-label"><span class="badge">ХАГАС</span> 29. Tomiya Special Ramen /half/</span>
+                        <span class="half-info">
+                            <span class="half-price" data-id="29"></span>
+                            <span class="half-cal">805 kcal</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -214,6 +262,13 @@
                         <div class="card-price" data-id="3"></div>
                         <div class="card-cal">1,026 kcal</div>
                     </div>
+                    <div class="card-half">
+                        <span class="half-label"><span class="badge">ХАГАС</span> 27. Spicy Chicken Ramen /half/</span>
+                        <span class="half-info">
+                            <span class="half-price" data-id="27"></span>
+                            <span class="half-cal">817 kcal</span>
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -226,53 +281,12 @@
                         <div class="card-price" data-id="4"></div>
                         <div class="card-cal">1,262 kcal</div>
                     </div>
-                </div>
-            </div>
-
-            <div class="menu-card">
-                <img class="card-image" src="images/26. Tonkotsu Ramen :half:.jpg.jpg" alt="" loading="lazy">
-                <div class="card-body">
-                    <div class="card-name">26. Tonkotsu Ramen <span class="badge">HALF</span></div>
-                    <div class="card-names-sub"><span>Гахайн ясны рамен /хагас/</span><span>豚骨ラーメン（ハーフ）</span></div>
-                    <div class="card-bottom">
-                        <div class="card-price" data-id="26"></div>
-                        <div class="card-cal">964 kcal</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="menu-card">
-                <img class="card-image" src="images/27. Spicy Chicken Ramen :half:.jpg.jpg" alt="" loading="lazy">
-                <div class="card-body">
-                    <div class="card-name">27. Spicy Chicken Ramen <span class="badge">HALF</span></div>
-                    <div class="card-names-sub"><span>Тахианы мах, халуун ногоотой рамен /хагас/</span><span>スパイシーチキンラーメン（ハーフ）</span></div>
-                    <div class="card-bottom">
-                        <div class="card-price" data-id="27"></div>
-                        <div class="card-cal">817 kcal</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="menu-card">
-                <img class="card-image" src="images/28. Miso Ramen :half:.jpg.jpg" alt="" loading="lazy">
-                <div class="card-body">
-                    <div class="card-name">28. Miso Ramen <span class="badge">HALF</span></div>
-                    <div class="card-names-sub"><span>Мисо рамен /хагас/</span><span>味噌ラーメン（ハーフ）</span></div>
-                    <div class="card-bottom">
-                        <div class="card-price" data-id="28"></div>
-                        <div class="card-cal">985 kcal</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="menu-card">
-                <img class="card-image" src="images/29. Beef Ramen :half:.jpg.jpg" alt="" loading="lazy">
-                <div class="card-body">
-                    <div class="card-name">29. Tomiya Special Ramen <span class="badge">HALF</span></div>
-                    <div class="card-names-sub"><span>Томияа спешл рамен /хагас/</span><span>とみやスペシャルラーメン（ハーフ）</span></div>
-                    <div class="card-bottom">
-                        <div class="card-price" data-id="29"></div>
-                        <div class="card-cal">805 kcal</div>
+                    <div class="card-half">
+                        <span class="half-label"><span class="badge">ХАГАС</span> 26. Tonkotsu Ramen /half/</span>
+                        <span class="half-info">
+                            <span class="half-price" data-id="26"></span>
+                            <span class="half-cal">964 kcal</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -982,10 +996,14 @@ const PRICES = {
     "71": "600",      // 71. Талх
 };
 
-document.querySelectorAll('.card-price[data-id]').forEach(el => {
+document.querySelectorAll('[data-id]').forEach(el => {
     const id = el.getAttribute('data-id');
     if (PRICES[id]) {
-        el.innerHTML = PRICES[id] + '<span class="currency">\u20AE</span>';
+        if (el.classList.contains('half-price')) {
+            el.innerHTML = PRICES[id] + '\u20AE';
+        } else {
+            el.innerHTML = PRICES[id] + '<span class="currency">\u20AE</span>';
+        }
     }
 });
 
